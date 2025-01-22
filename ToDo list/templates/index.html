@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>ToDo List</title>
+    </head>
+    <body>
+        <h1>ToDo List</h1>
+        <form action="/add" method="POST">
+            <input type="text" name="task" placeholder="Escribe" required>
+            <button type="submit">Añadir tarea</button>
+        </form>
+        <ul>
+            {% for task in tasks %}
+                <li>
+                    {% if task.completed %}
+                        <span style="text-decoration: line-through;">{{ task.name }}</span>
+                    {% else %}
+                        <form action="/edit/{{ loop.index0 }}" method="POST" style="display:inline;">
+                            <input type="text" name="task" value="{{ task.name }}" required>
+                        </form>
+                        <form action="/complete/{{ loop.index0 }}" style="display:inline;">
+                            <button type="submit">Completar</button>
+                        </form>
+                    {% endif %}
+                    <form action="/delete/{{ loop.index0 }}" style="display:inline;">
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </body>
+</html>
